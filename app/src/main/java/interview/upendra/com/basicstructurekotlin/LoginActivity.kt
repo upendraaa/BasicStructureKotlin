@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity(){
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
 
+        //First time User
         btnLogin!!.setOnClickListener({
             mAuth!!.createUserWithEmailAndPassword(etEmail!!.editableText.toString(),
                 etPassword!!.editableText.toString()).addOnCompleteListener(this){
@@ -43,6 +44,13 @@ class LoginActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
+
+        if (mAuth!!.currentUser != null) {
+            Toast.makeText(
+                this,
+                "Authorized User!", Toast.LENGTH_LONG
+            ).show();
+        }
     }
 
     override fun onPause() {
