@@ -36,11 +36,11 @@
     </Button>
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnNext"
         android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Cancel"
+        android:text="Next"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
