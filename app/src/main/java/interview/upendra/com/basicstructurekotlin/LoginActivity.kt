@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity(){
 
@@ -14,6 +15,8 @@ class LoginActivity : AppCompatActivity(){
     var etPassword: EditText?=null;
     var btnLogin: Button?=null;
     var mAuth:FirebaseAuth?=null;
+    val mDatabase = FirebaseDatabase.getInstance();
+    var mReferenceId = mDatabase.reference;
 
 
 
@@ -46,6 +49,13 @@ class LoginActivity : AppCompatActivity(){
         super.onStart()
 
         if (mAuth!!.currentUser != null) {
+
+            val currentUser = mAuth!!.currentUser;
+
+            mReferenceId.child("Users").child(
+                currentUser!!.uid
+            ).setValue(currentUser.email)
+            
             Toast.makeText(
                 this,
                 "Authorized User!", Toast.LENGTH_LONG
