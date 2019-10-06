@@ -1,5 +1,6 @@
 package interview.upendra.com.basicstructurekotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity(){
@@ -15,8 +17,8 @@ class LoginActivity : AppCompatActivity(){
     var etPassword: EditText?=null;
     var btnLogin: Button?=null;
     var mAuth:FirebaseAuth?=null;
-    val mDatabase = FirebaseDatabase.getInstance();
-    var mReferenceId = mDatabase.reference;
+    var mDatabase: FirebaseDatabase? = null
+    var mReferenceId: DatabaseReference? = null
 
 
 
@@ -25,6 +27,8 @@ class LoginActivity : AppCompatActivity(){
         setContentView(R.layout.activity_login)
         FirebaseApp.initializeApp(this)
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance()
+        mReferenceId = mDatabase!!.reference
 
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
@@ -52,7 +56,7 @@ class LoginActivity : AppCompatActivity(){
 
             val currentUser = mAuth!!.currentUser;
 
-            mReferenceId.child("Users").child(
+            mReferenceId!!.child("Users").child(
                 currentUser!!.uid
             ).setValue(currentUser.email)
             
@@ -60,6 +64,9 @@ class LoginActivity : AppCompatActivity(){
                 this,
                 "Authorized User!", Toast.LENGTH_LONG
             ).show();
+
+            val intent = Intent(this, TicTacToeActivity::class.java)
+            startActivity(intent)
         }
     }
 
